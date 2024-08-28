@@ -15,6 +15,8 @@
 #include <string>
 #include<cstdlib>
 #include <ctime>
+#include <limits>
+#include <vector>
 
 using namespace std;
 
@@ -24,20 +26,20 @@ int choice;
     rock, paper, scissors
   };
 
-void playerTurn(int pChoice);
-//void computerTurn(int cChoice);
+void playerTurn(int &pChoice);
+void win(vector<string> log, int pTally, int cTally);
+void barrier();
+
 int main() {
   Choices pchoice;
   Choices cchoice;
-  int pChoice;
-  int cChoice;
-  int pTally = 0;
-  int cTally = 0;
+  vector<string> log;
+  int pChoice, cChoice, pTally, cTally;
   bool pWin;
   bool cWin;
 
-  cout << "Rock, Paper, Scissiors\n\n";
-  for (int i = 0; i <= 4; i++) {
+  cout << "Rock, Paper, Scissiors\n";
+  while(pTally < 5 && cTally < 5) {
     do {
       pWin = false;
       cWin = false;
@@ -45,17 +47,26 @@ int main() {
       srand(x);
       cChoice = 1 + rand() % 3;
 
-      cout << "\nPlayer choice:\n";
-      cin >> pChoice;
-      if(pChoice == 1) {
-        pchoice = rock;
-        cout << "\nYou chose rock\n";
-      } else if (pChoice == 2) {
-        pchoice = paper;
-        cout << "\nYou chose paper\n";
-      } else if (pChoice == 3){
-        pchoice = scissors;
-        cout << "\nYou chose scissors\n";
+      barrier();
+
+      playerTurn(pChoice);
+
+      switch(pChoice) {
+        case 1: 
+          cout << "\nYou chose rock\n";
+          pchoice = rock;
+          break;
+        case 2:
+          cout << "\nYou chose paper\n";
+          pchoice = paper;
+          break;
+        case 3:
+          cout << "\nYou chose scissors\n";
+          pchoice = scissors;
+          break;
+        default:
+          playerTurn(pChoice);
+          break;
       }
 
       if(cChoice == 1) {
@@ -70,25 +81,32 @@ int main() {
       };
 
       if(pchoice == rock && cchoice == scissors) {
+        log.push_back("Player Win");
         pTally+=1;
         pWin = true;
       } else if(pchoice == paper && cchoice == rock) {
+        log.push_back("Player Win");
         pTally+=1;
         pWin = true;
       } else if(pchoice == scissors && cchoice == paper) {
+        log.push_back("Player Win");
         pTally+=1;
         pWin = true;
       } else if(cchoice == rock && pchoice == scissors) {
+        log.push_back("Computer Win");
         cTally+=1;
         cWin = true;
       } else if(cchoice == paper && pchoice == rock) {
+        log.push_back("Computer Win");
         cTally+=1;
         cWin = true;
       } else if(cchoice == scissors && pchoice == paper) {
+        log.push_back("Computer Win");
         cTally+=1;
         cWin = true;
       } else {
-        cout << "\nTie!\n";
+        cout << "\nTie!\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n";
+        log.push_back("TIE");
       }
 
       /*(pChoice == 1) ? void(pchoice = rock) : 
@@ -149,27 +167,49 @@ int main() {
       
       //computerTurn(cWin);
     
-    (pWin == true) ? void(cout << "\nPlayer wins! " << "\nPlayer wins: " << pTally << " Computer wins: " << cTally) :
-      (cWin == true) ? void(cout << "\nComputer wins!" << "\nPlayer wins: " << pTally << " Computer wins: " << cTally) :
-        void(cout << "\nIt's a tie!");
+    (pWin == true) ? void(cout << "\nPlayer wins! " << "\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n") :
+      (cWin == true) ? void(cout << "\nComputer wins!" << "\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n") :
+        void(cout << "\nIt's a tie!\n Player wins: " << pTally << " Computer wins: " << cTally << "\n");
 
   }
+  win(log, pTally, cTally);
+  
+  return 0;
 }
 
-void playerTurn(int pChoice) {
-  //Choices pchoice;
-
-  cout << "\nIt's your turn:\n";
-  cout << "1.) Rock\n2.) Paper\n3.) Scissors\n\n";
-  cin >> choice; 
-  (choice = 1) ? void(pchoice == rock) :
+void playerTurn(int &pChoice) {
+  bool validInput = false; 
+  /*(choice = 1) ? void(pchoice == rock) :
     (choice = 2) ? void(pchoice == paper) :
       (choice = 3) ? void(pchoice == scissors) :
-        void(cout << "\nThat input was invalid, try again");
-        
-  
-}
+        void(cout << "\nThat input was invalid, try again");*/
 
+
+  while(!validInput) {
+    cout << "\nIt's your turn:\n";
+    cout << "1.) Rock\n2.) Paper\n3.) Scissors\n\n";
+    cin >> pChoice; 
+
+    if (cin.fail()) {
+            cout << "Invalid input! Expected an integer."
+                 << endl;
+            // Clear the failbit and ignore the remaining
+            // input
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),
+                       '\n');
+        }
+        else {
+            // Input is valid
+            validInput = true;
+        }
+
+    (pChoice == 1) ? void(validInput = true) :
+      (pChoice == 2) ? void(validInput = true) :
+        (pChoice == 3) ? void(validInput = true) :
+          void(cout << "\nInput invalid, try again:\n");
+  }
+}
 /*void computerTurn(bool cWin) {
   Choices cchoice;
   //int randNum = rand() % 3;
@@ -188,8 +228,22 @@ void playerTurn(int pChoice) {
 /*void computerTurn(int cChoice) {
 }*/
 
-void win() {
+void win(vector<string> log, int pTally, int cTally) {
+  barrier();
+  cout << "\nRESULTS OVERALL:\n";
+  for(auto i: log) {
+    cout << i << "\n";
+  }
+  cout << "\nEND GAME:\n";
+  (pTally > cTally) ? cout << "\nCONGRATS PLAYER, YOU WON!\nFinal Scores: Player wins: " << pTally << " Computer wins: " << cTally:
+    (pTally < cTally) ? cout << "\nBetter luck next time!\nFinal Scores: Player wins: " << pTally << " Computer wins: " << cTally:
+      cout << "Congrats you broke the program!";
+}
 
+void barrier() {
+  for (int i = 0; i < 20; i++) {
+    cout << "=";
+  }
 }
 
 
