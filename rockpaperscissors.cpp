@@ -20,56 +20,55 @@
 
 using namespace std;
 
-int choice; 
-
- enum Choices {
+ enum Choices { // enum values 
     rock, paper, scissors
   };
 
+// Function Prototypes vvv
 void playerTurn(int &pChoice);
 void win(vector<string> log, int pTally, int cTally);
 void barrier();
 
 int main() {
-  Choices pchoice;
-  Choices cchoice;
-  vector<string> log;
-  int pChoice, cChoice, pTally, cTally;
-  bool pWin;
-  bool cWin;
+  Choices pchoice; // selected player enum 
+  Choices cchoice; // selected computer enum 
+  vector<string> log; // vector used to log wins/ties/losses
+  int pChoice, cChoice, pTally, cTally; // pTally = # of player wins | cTally = # of computer wins 
+  bool pWin; // player win boolean
+  bool cWin; // computer win boolean 
 
   cout << "Rock, Paper, Scissiors\n";
-  while(pTally < 5 && cTally < 5) {
-    do {
+  while(pTally < 5 && cTally < 5) { // while both values for pTally and cTally are less than 5 
+    do { // run this block of code while cWin/pWin values are false 
       pWin = false;
       cWin = false;
-      int x = time(0);
+      int x = time(0); 
       srand(x);
-      cChoice = 1 + rand() % 3;
+      cChoice = 1 + rand() % 3; // fetches cChoice value from 1-3 (random number)
 
       barrier();
 
-      playerTurn(pChoice);
+      playerTurn(pChoice); // passes player choice value into playerTurn function 
 
-      switch(pChoice) {
+      switch(pChoice) { // checks userInput
         case 1: 
           cout << "\nYou chose rock\n";
-          pchoice = rock;
+          pchoice = rock; // players assigned enum is rock 
           break;
         case 2:
           cout << "\nYou chose paper\n";
-          pchoice = paper;
+          pchoice = paper; // players assigned enum is paper
           break;
         case 3:
           cout << "\nYou chose scissors\n";
-          pchoice = scissors;
+          pchoice = scissors; // players assigned enum is scissors
           break;
         default:
-          playerTurn(pChoice);
+          playerTurn(pChoice); // in the case of invalid input, loop playerTurn function 
           break;
       }
 
-      if(cChoice == 1) {
+      if(cChoice == 1) { // checks the cChoice int fetched by computer 
         cchoice = rock;
         cout << "\nThe computer chose rock\n";
       } else if (cChoice == 2) {
@@ -80,10 +79,10 @@ int main() {
         cout << "\nThe computer chose scissors\n";
       };
 
-      if(pchoice == rock && cchoice == scissors) {
-        log.push_back("Player Win");
-        pTally+=1;
-        pWin = true;
+      if(pchoice == rock && cchoice == scissors) { // this block of code compares both the player enum and computer enum with eachother, simulates a rock paper scissors game
+        log.push_back("Player Win"); // adds "Player Win" to the log vector 
+        pTally+=1; // adds 1 to the pTally value 
+        pWin = true; // sets the boolean value pWin to true, exiting the loop
       } else if(pchoice == paper && cchoice == rock) {
         log.push_back("Player Win");
         pTally+=1;
@@ -93,9 +92,9 @@ int main() {
         pTally+=1;
         pWin = true;
       } else if(cchoice == rock && pchoice == scissors) {
-        log.push_back("Computer Win");
-        cTally+=1;
-        cWin = true;
+        log.push_back("Computer Win"); // adds "Computer Win" to the log vector 
+        cTally+=1; // adds 1 to the cTally value 
+        cWin = true; // sets the boolean value cWin to true, exiting the loop 
       } else if(cchoice == paper && pchoice == rock) {
         log.push_back("Computer Win");
         cTally+=1;
@@ -104,9 +103,9 @@ int main() {
         log.push_back("Computer Win");
         cTally+=1;
         cWin = true;
-      } else {
-        cout << "\nTie!\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n";
-        log.push_back("TIE");
+      } else { // in the case of both enums being the same, output a tie where no point is given 
+        cout << "\nTie!\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n"; 
+        log.push_back("TIE"); // adds "TIE" to the log vector 
       }
 
       /*(pChoice == 1) ? void(pchoice = rock) : 
@@ -167,47 +166,44 @@ int main() {
       
       //computerTurn(cWin);
     
-    (pWin == true) ? void(cout << "\nPlayer wins! " << "\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n") :
-      (cWin == true) ? void(cout << "\nComputer wins!" << "\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n") :
-        void(cout << "\nIt's a tie!\n Player wins: " << pTally << " Computer wins: " << cTally << "\n");
+    (pWin == true) ? void(cout << "\nPlayer wins! " << "\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n") : // if the player wins, print this line
+      (cWin == true) ? void(cout << "\nComputer wins!" << "\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n") : // if the computer wins, print this line
+        void(cout << "\nIt's a tie!\n Player wins: " << pTally << " Computer wins: " << cTally << "\n"); // if it is a tie, print this line 
 
   }
-  win(log, pTally, cTally);
+  win(log, pTally, cTally); // win function after the player/computer gets 5 wins 
   
   return 0;
 }
 
-void playerTurn(int &pChoice) {
-  bool validInput = false; 
+void playerTurn(int &pChoice) { // player turn function, pChoice is passed through by reference 
+  bool validInput = false; // valid input boolean value set to false 
   /*(choice = 1) ? void(pchoice == rock) :
     (choice = 2) ? void(pchoice == paper) :
       (choice = 3) ? void(pchoice == scissors) :
         void(cout << "\nThat input was invalid, try again");*/
 
 
-  while(!validInput) {
+  while(!validInput) { // while valid input is not true 
     cout << "\nIt's your turn:\n";
     cout << "1.) Rock\n2.) Paper\n3.) Scissors\n\n";
     cin >> pChoice; 
 
-    if (cin.fail()) {
+    if (cin.fail()) { // if the input is a wrong data type, run the block of code below 
             cout << "Invalid input! Expected an integer."
                  << endl;
-            // Clear the failbit and ignore the remaining
-            // input
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(),
                        '\n');
         }
         else {
-            // Input is valid
-            validInput = true;
+            validInput = true; // valid input is set to true, exits the if statement 
         }
 
     (pChoice == 1) ? void(validInput = true) :
       (pChoice == 2) ? void(validInput = true) :
         (pChoice == 3) ? void(validInput = true) :
-          void(cout << "\nInput invalid, try again:\n");
+          void(cout << "\nInput invalid, try again:\n"); // if a wrong number is input, rerun the function 
   }
 }
 /*void computerTurn(bool cWin) {
@@ -228,19 +224,19 @@ void playerTurn(int &pChoice) {
 /*void computerTurn(int cChoice) {
 }*/
 
-void win(vector<string> log, int pTally, int cTally) {
+void win(vector<string> log, int pTally, int cTally) { 
   barrier();
   cout << "\nRESULTS OVERALL:\n";
-  for(auto i: log) {
+  for(auto i: log) { // print out the entire log vector 
     cout << i << "\n";
   }
   cout << "\nEND GAME:\n";
-  (pTally > cTally) ? cout << "\nCONGRATS PLAYER, YOU WON!\nFinal Scores: Player wins: " << pTally << " Computer wins: " << cTally:
-    (pTally < cTally) ? cout << "\nBetter luck next time!\nFinal Scores: Player wins: " << pTally << " Computer wins: " << cTally:
+  (pTally > cTally) ? cout << "\nCONGRATS PLAYER, YOU WON!\nFinal Scores: Player wins: " << pTally << " Computer wins: " << cTally: // print if player wins overall
+    (pTally < cTally) ? cout << "\nBetter luck next time!\nFinal Scores: Player wins: " << pTally << " Computer wins: " << cTally: // print if commputer wins overall
       cout << "Congrats you broke the program!";
 }
 
-void barrier() {
+void barrier() { // barrier function to create lines to seperate turns 
   for (int i = 0; i < 20; i++) {
     cout << "=";
   }
