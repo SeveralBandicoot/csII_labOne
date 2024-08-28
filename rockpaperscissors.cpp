@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <string>
+#include<cstdlib>
 
 using namespace std;
 
@@ -22,18 +23,25 @@ int choice;
     rock, paper, scissors
   };
 
-void playerTurn();
-void computerTurn();
+void playerTurn(Choices pchoice, bool pWin);
+void computerTurn(bool cWin);
 int main() {
+  Choices pchoice;
+  bool pWin = false;
+  bool cWin = false;
 
   cout << "Rock, Paper, Scissiors\n\n";
   for (int i = 0; i <= 5; i++) {
-    playerTurn();
+    while (pWin == false && cWin == false) {
+      playerTurn(pchoice, pWin);
+      computerTurn(cWin);
+    }
+
   }
 }
 
-void playerTurn() {
-  Choices pchoice;
+void playerTurn(Choices pchoice, bool pWin) {
+  //Choices pchoice;
 
   cout << "It's your turn:\n";
   cout << "1.) Rock\n2.) Paper\n3.) Scissors\n\n";
@@ -41,15 +49,22 @@ void playerTurn() {
   (choice = 1) ? void(pchoice = rock) :
     (choice = 2) ? void(pchoice = paper) :
       (choice = 3) ? void(pchoice = scissors) :
-        void(cout << "That input was invalid, try again");
-
+        void(cout << "\nThat input was invalid, try again");
+        
   /*(choice = rock) ? cout << "You choose rock" :
   (choice = paper) ? cout << "You choose paper" :
   (choice = scissors) ? cout << "You chose scissors" :
   cout << "Invalid input, please try again";*/
 }
 
-void computerTurn() {
+void computerTurn(bool cWin) {
+  Choices cchoice;
+  int randNum = rand() % 3;
+  cout << "It's the Computer's turn:\n";
+ // (randNum = 1) ? void (cchoice = rock)
+}
+
+void win() {
 
 }
 
