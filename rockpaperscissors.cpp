@@ -8,7 +8,6 @@
 3. The computer will randomly choose 1-3 after the player makes his choice.
 4. Record all wins, ties and losses in their respective Vectors
 5. Play until someone scores 5 wins
-
 */
 
 #include <iostream>
@@ -62,7 +61,7 @@ int main() {
         case 3:
           cout << "\nYou chose scissors\n";
           pchoice = scissors; // players assigned enum is scissors
-          break;
+          break; 
         default:
           playerTurn(pChoice); // in the case of invalid input, loop playerTurn function 
           break;
@@ -77,7 +76,7 @@ int main() {
       } else if (cChoice == 3){
         cchoice = scissors;
         cout << "\nThe computer chose scissors\n";
-      };
+      } 
 
       if(pchoice == rock && cchoice == scissors) { // this block of code compares both the player enum and computer enum with eachother, simulates a rock paper scissors game
         log.push_back("Player Win"); // adds "Player Win" to the log vector 
@@ -108,63 +107,12 @@ int main() {
         log.push_back("TIE"); // adds "TIE" to the log vector 
       }
 
-      /*(pChoice == 1) ? void(pchoice = rock) : 
-      void(cout << "\nYou broke it!");
-
-      (pchoice == rock) ? void(cout << "\nYou chose rock") : 
-      void (cout << "\nYou broke it!");*/
-    
 
 
-      /*playerTurn(pchoice);
-      cout << "It's the computer's turn!\n";
-      //computerTurn(cChoice);
-      int x = time(0);
-      srand(x);
-      cChoice = 1 + rand() % 3;
-      (cChoice = 1) ? void(cchoice == rock) :
-        (cChoice = 2) ? void(cchoice == paper) :
-          (cChoice = 3) ? void(cchoice == scissors) : 
-            void(cout << "\nYou broke it!");
-      (cchoice == rock) ? void(cout << "\nThe computer chose rock") :
-        (cchoice == paper) ? void(cout << "\nThe computer chose paper") :
-          (cchoice == scissors) ? void(cout << "\nThe computer chose scissors") :
-            void(cout << "\nYou broke it!");*/
-      
-
-      /*(cChoice == 1) ? void(cout << "\nThe computer chose rock") :
-        (cChoice == 2) ? void(cout << "\nThe computer chose paper") :
-          (cChoice == 3) ? void(cout << "\nThe computer chose scissors") :
-            void(cout << "\nYou broke it!");
-
-      (cChoice == 1) ? void(cchoice == rock) :
-        (cChoice == 2) ? void(cchoice == paper) :
-          (cChoice == 3) ? void(cchoice == scissors) : 
-            void(cout << "\nYou broke it!");*/
-      
-      /*(pchoice == rock && cchoice == paper) ? void(cWin == true) :
-        (pchoice == paper && cchoice == scissors) ? void(cWin == true) :
-          (pchoice == scissors && cchoice == rock) ? void(cWin == true) :
-            (pchoice == rock && cchoice == scissors) ? void(pWin == true) :
-              (pchoice == paper && cchoice == rock) ? void(pWin == true) :
                 (pchoice == scissors && cchoice == paper) ? void(pWin == true) :
-                  void("\nTie!");   */
+                  void("\nTie!");   
     }
     while(pWin == false && cWin == false);
-      //computerTurn(min, max, cChoice);
-      /*int x = time(0);
-      srand(x);
-      cChoice = 1 + rand() % 3;
-      (cChoice == 1) ? void(cout << "\nThe computer chose rock") :
-        (cChoice == 2) ? void(cout << "\nThe computer chose paper") :
-          (cChoice == 3) ? void(cout << "\nThe computer chose scissors") :
-            void(cout << "\nYou broke it!");
-      (cChoice == 1) ? void(cchoice = rock) :
-        (cChoice == 2) ? void(cchoice = paper) :
-          (cChoice == 3) ? void(cchoice = scissors) : 
-            void(cout << "\nYou broke it!");*/
-      
-      //computerTurn(cWin);
     
     (pWin == true) ? void(cout << "\nPlayer wins! " << "\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n") : // if the player wins, print this line
       (cWin == true) ? void(cout << "\nComputer wins!" << "\nPlayer wins: " << pTally << " Computer wins: " << cTally << "\n") : // if the computer wins, print this line
@@ -178,11 +126,6 @@ int main() {
 
 void playerTurn(int &pChoice) { // player turn function, pChoice is passed through by reference 
   bool validInput = false; // valid input boolean value set to false 
-  /*(choice = 1) ? void(pchoice == rock) :
-    (choice = 2) ? void(pchoice == paper) :
-      (choice = 3) ? void(pchoice == scissors) :
-        void(cout << "\nThat input was invalid, try again");*/
-
 
   while(!validInput) { // while valid input is not true 
     cout << "\nIt's your turn:\n";
@@ -206,23 +149,6 @@ void playerTurn(int &pChoice) { // player turn function, pChoice is passed throu
           void(cout << "\nInput invalid, try again:\n"); // if a wrong number is input, rerun the function 
   }
 }
-/*void computerTurn(bool cWin) {
-  Choices cchoice;
-  //int randNum = rand() % 3;
-  double randNum = rand()/static_cast<double>(RAND_MAX+1);
-
-  int cChoice = 1 + static_cast<int>(x * (max - min));
-  
-  return cChoice; 
-  cout << "It's the Computer's turn:\n";
-  (randNum = 1) ? void( cout << "The computer chose rock") :
-    (randNum = 2) ? void(cout << "The computer chose paper") :
-      (randNum = 3) ? void(cout << "The computer chose scissors")
- // (randNum = 1) ? void (cchoice = rock)
-}*/
-
-/*void computerTurn(int cChoice) {
-}*/
 
 void win(vector<string> log, int pTally, int cTally) { 
   barrier();
